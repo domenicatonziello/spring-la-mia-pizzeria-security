@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.java.pizzeria.demo.auth.pojo.Role;
+import org.java.pizzeria.demo.auth.pojo.User;
+import org.java.pizzeria.demo.auth.serv.RoleService;
+import org.java.pizzeria.demo.auth.serv.UserService;
 import org.java.pizzeria.demo.pojo.Ingredienti;
 import org.java.pizzeria.demo.pojo.OffertaSpeciale;
 import org.java.pizzeria.demo.pojo.Pizza;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
@@ -26,13 +31,20 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	
 	@Autowired
 	private IngredientiService ingredientiservice;
+	
+	@Autowired
+	private UserService userservice;
+
+	@Autowired
+	private RoleService roleservice;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) throws Exception {		
+//		INGREDIENTI ---------------------------------------------------------------------------------------------------------------------------------------------------------
 		Ingredienti ing1 = new Ingredienti("mozzarella");
 		Ingredienti ing2 = new Ingredienti("pomodori");
 		Ingredienti ing3 = new Ingredienti("acciughe");
@@ -42,12 +54,16 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		ingredientiservice.save(ing3);
 		
 		
+//		PIZZE --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		Pizza margherita = new Pizza("margherita", "descrizione pizza", "https://static.cookist.it/wp-content/uploads/sites/21/2018/04/pizza-margherita-fatta-in-casa.jpg", 10.00f);
 		Pizza marinara = new Pizza("marinara", "descrizione pizza marinara", "https://static.cookist.it/wp-content/uploads/sites/21/2018/04/pizza-margherita-fatta-in-casa.jpg", 8.00f);
 		
 		pizzaservice.save(margherita);
 		pizzaservice.save(marinara);
+		
+		
+//		OFFERTE ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		OffertaSpeciale off1 = new OffertaSpeciale(LocalDate.parse("2023-05-28"), LocalDate.parse("2023-05-31"), "Nuova offerta", 20, margherita);		
 		OffertaSpeciale off2 = new OffertaSpeciale(LocalDate.parse("2023-06-10"), LocalDate.parse("2023-06-30"), "Seconda offerta", 15, marinara);
@@ -59,17 +75,32 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		offertaservice.save(off3);
 		offertaservice.save(off4);
 		
+//		UTENTI --------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Role userRole = new Role("USER");
+		Role adminRole = new Role("ADMIN");
+
+		roleservice.save(userRole);
+		roleservice.save(adminRole);
+
+		final String password = new BCryptPasswordEncoder().encode("domenica");
+
+		User userUser = new User("user", password, userRole);
+		User userAdmin = new User("domenica", password, adminRole);
+
+		userservice.save(userUser);
+		userservice.save(userAdmin);
+		
 		List<Pizza> pizze = pizzaservice.findAll();
 		
-		for(Pizza pizza : pizze) {
-
-			Optional<Pizza> optPizzaOffer = pizzaservice.findByIdWithOffertaSpeciale(pizza.getId());
-			Pizza pizzaOffer = optPizzaOffer.get();
-			System.out.println(pizzaOffer.getOfferte());
-
-		}
+//		for(Pizza pizza : pizze) {
+//
+//			Optional<Pizza> optPizzaOffer = pizzaservice.findByIdWithOffertaSpeciale(pizza.getId());
+//			Pizza pizzaOffer = optPizzaOffer.get();
+//			System.out.println(pizzaOffer.getOfferte());
+//
+//		}
 		
-		System.out.println(pizze);
+//		System.out.println(pizze);
 		
 	}
 

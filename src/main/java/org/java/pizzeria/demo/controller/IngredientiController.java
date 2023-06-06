@@ -13,29 +13,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 
 @Controller
+@RequestMapping("/ingredients")
 public class IngredientiController {
 	
 	@Autowired
 	private IngredientiService ingredientiservice;
 	
-	@GetMapping("/ingredients")
+	@GetMapping("/user")
 	public String getPizze(Model model) {
 		List<Ingredienti> ingredienti = ingredientiservice.findAll();
 		model.addAttribute("ingredienti", ingredienti);
 		return "ingredienti-index";
 	}
 	
-	@GetMapping("/ingredients/create")
+	@GetMapping("/admin/create")
 	public String create(Model model) {
 		
 		model.addAttribute("ingrediente", new Ingredienti());
 		return "ingredienti-create";
 	}
-	@PostMapping("/ingredients/create")
+	@PostMapping("/admin/create")
 	public String storeBook(Model model, @Valid @ModelAttribute Ingredienti ingrediente,
 							BindingResult bindingResult) {
 		
@@ -57,7 +59,7 @@ public class IngredientiController {
 
 		return "redirect:/ingredients";
 	}
-	@PostMapping("ingredients/delete/{id}")
+	@PostMapping("admin/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 
 		ingredientiservice.deleteById(id);

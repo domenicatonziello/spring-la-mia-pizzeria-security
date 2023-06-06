@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/")
 public class PizzaController {
 	
 	@Autowired
@@ -67,7 +65,7 @@ public class PizzaController {
 		return "show";
 	}
 	
-	@GetMapping("/pizza/create")
+	@GetMapping("/admin/pizza/create")
 	public String create(Model model) {
 		
 		List<Ingredienti> ingredienti = ingredientiservice.findAll();
@@ -76,7 +74,7 @@ public class PizzaController {
 		model.addAttribute("pizza", new Pizza());
 		return "create";
 	}
-	@PostMapping("pizza/create")
+	@PostMapping("/admin/pizza/create")
 	public String storeBook(Model model, @Valid @ModelAttribute Pizza pizza,
 							BindingResult bindingResult) {
 		
@@ -99,7 +97,7 @@ public class PizzaController {
 		return "redirect:/";
 	}
 	
-	@PostMapping("pizza/delete/{id}")
+	@PostMapping("/admin/pizza/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 
 		pizzaService.deleteById(id);
@@ -107,7 +105,7 @@ public class PizzaController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("pizza/edit/{id}")
+	@GetMapping("/admin/pizza/edit/{id}")
 	public String editPizza(Model model, @PathVariable("id") int id) {
 		
 		List<Ingredienti> ingredienti = ingredientiservice.findAll();
@@ -120,7 +118,7 @@ public class PizzaController {
 		model.addAttribute("pizza", pizza);
 		return "edit-form";
 	}
-	@PostMapping("pizza/update/{id}")
+	@PostMapping("/admin/pizza/update/{id}")
 	public String updatePizza(  Model model, @PathVariable int id, @ModelAttribute @Valid Pizza pizza,
 								BindingResult bindingResult) {
 		

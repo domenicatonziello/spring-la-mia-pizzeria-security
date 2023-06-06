@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/")
 public class OffertaController {
 
 	@Autowired
@@ -28,7 +27,7 @@ public class OffertaController {
 	@Autowired
 	private PizzaService pizzaService;
 	
-	@GetMapping("pizza/{id}/offerta/create")
+	@GetMapping("/admin/pizza/{id}/offerta/create")
 	public String getOfferCreate(@PathVariable int id, Model model){
 
 		model.addAttribute("offerta", new OffertaSpeciale());
@@ -37,7 +36,7 @@ public class OffertaController {
 
 	}
 
-	@PostMapping("pizza/{id}/offerta/create")
+	@PostMapping("/admin/pizza/{id}/offerta/create")
 	public String storeSpecialOffer(@PathVariable int id, Model model, @ModelAttribute @Valid OffertaSpeciale offerta, BindingResult bindingResult) {
 
 
@@ -59,7 +58,7 @@ public class OffertaController {
 		return "redirect:/pizza/" + offerta.getPizza().getId();
 	}
 
-	@GetMapping("pizza/{pizzaId}/offerta/edit/{id}")
+	@GetMapping("/admin/pizza/{pizzaId}/offerta/edit/{id}")
 	public String editOffer(Model model, @PathVariable int pizzaId, @PathVariable int id) {
 
 		Optional<OffertaSpeciale> optSpecialOffer = offertaService.findById(id);
@@ -72,7 +71,7 @@ public class OffertaController {
 
 	}
 
-	@PostMapping("pizza/{pizzaId}/offerta/update/{id}")
+	@PostMapping("/admin/pizza/{pizzaId}/offerta/update/{id}")
 	public String updatePizza(Model model, @PathVariable int pizzaId, @PathVariable int id, @ModelAttribute @Valid OffertaSpeciale offerta, BindingResult bindingResult) {
 
 
