@@ -47,7 +47,7 @@ public class PizzaController {
 	}
 	
 	
-	@GetMapping("/pizza/{id}")
+	@GetMapping("/user/pizza/{id}")
 	public String show(@PathVariable("id") int id, Model model ) {
 		
 		List<Ingredienti> ingredienti = ingredientiservice.findAll();
@@ -137,6 +137,6 @@ public class PizzaController {
 
 		pizzaService.save(pizza);
 
-		return "redirect:/pizza/" + id;
+		return "redirect:/user/pizza/" + id;
 	}
 }

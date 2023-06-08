@@ -21,12 +21,10 @@ public class UserService implements UserDetailsService{
 
 		return userRepo.findAll();
 	}
-
 	public Optional<User> findById(int id) {
 
 		return userRepo.findById(id);
 	}
-
 	public User save(User user) {
 
 		return userRepo.save(user);

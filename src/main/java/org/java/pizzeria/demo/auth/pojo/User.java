@@ -66,7 +66,12 @@ public class User implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getPassword() {
+		return password;
+	}
+	public String getUsername() {
+		return username;
+	}
 	
 	
 	
@@ -104,16 +109,7 @@ public class User implements UserDetails{
 
 		return "[" + getId() + "] " + getUsername();
 	}
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 
 }

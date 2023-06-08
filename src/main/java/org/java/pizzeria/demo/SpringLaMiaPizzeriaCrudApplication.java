@@ -76,19 +76,19 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		offertaservice.save(off4);
 		
 //		UTENTI --------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Role userRole = new Role("USER");
-		Role adminRole = new Role("ADMIN");
+		Role roleUser = new Role("USER");
+		Role roleAdmin = new Role("ADMIN");
 
-		roleservice.save(userRole);
-		roleservice.save(adminRole);
+		roleservice.save(roleUser);
+		roleservice.save(roleAdmin);
 
-		final String password = new BCryptPasswordEncoder().encode("domenica");
+		final String pass = new BCryptPasswordEncoder().encode("pass");
 
-		User userUser = new User("user", password, userRole);
-		User userAdmin = new User("domenica", password, adminRole);
+		User utente1 = new User("user", pass, roleUser);
+		User utente2 = new User("admin", pass, roleAdmin);
 
-		userservice.save(userUser);
-		userservice.save(userAdmin);
+		userservice.save(utente1);
+		userservice.save(utente2);
 		
 		List<Pizza> pizze = pizzaservice.findAll();
 		

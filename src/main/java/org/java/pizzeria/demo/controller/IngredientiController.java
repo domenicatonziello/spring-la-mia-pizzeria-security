@@ -18,26 +18,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/ingredients")
 public class IngredientiController {
 	
 	@Autowired
 	private IngredientiService ingredientiservice;
 	
-	@GetMapping("/user")
+	@GetMapping("/user/ingredients")
 	public String getPizze(Model model) {
 		List<Ingredienti> ingredienti = ingredientiservice.findAll();
 		model.addAttribute("ingredienti", ingredienti);
 		return "ingredienti-index";
 	}
 	
-	@GetMapping("/admin/create")
+	@GetMapping("/admin/ingredients/create")
 	public String create(Model model) {
 		
 		model.addAttribute("ingrediente", new Ingredienti());
 		return "ingredienti-create";
 	}
-	@PostMapping("/admin/create")
+	@PostMapping("/admin/ingredients/create")
 	public String storeBook(Model model, @Valid @ModelAttribute Ingredienti ingrediente,
 							BindingResult bindingResult) {
 		
@@ -57,14 +56,14 @@ public class IngredientiController {
 
 		ingredientiservice.save(ingrediente);
 
-		return "redirect:/ingredients";
+		return "redirect:/user/ingredients";
 	}
-	@PostMapping("admin/delete/{id}")
+	@PostMapping("admin/ingredients/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 
 		ingredientiservice.deleteById(id);
 
-		return "redirect:/ingredients";
+		return "redirect:/user/ingredients";
 	}
 
 }

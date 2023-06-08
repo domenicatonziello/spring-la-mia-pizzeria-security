@@ -55,7 +55,7 @@ public class OffertaController {
 
 		offertaService.save(offerta);
 
-		return "redirect:/pizza/" + offerta.getPizza().getId();
+		return "redirect:/user/pizza/" + offerta.getPizza().getId();
 	}
 
 	@GetMapping("/admin/pizza/{pizzaId}/offerta/edit/{id}")
@@ -91,7 +91,7 @@ public class OffertaController {
 
 		offertaService.save(offerta);
 
-		return "redirect:/pizza/" + pizzaId;
+		return "redirect:/user/pizza/" + pizzaId;
 
 	}
 }
